@@ -69,7 +69,7 @@
                 الخرجة العائلية <span class="text-brand-orange">لآل حمدي</span> 🌴✨
             </h1>
             <p class="text-slate-600 text-base sm:text-lg font-medium max-w-2xl mx-auto mb-4">
-                  أهلاً وسهلاً بجميع الأفراد والأسر، يرجى ملء الاستمارة لتنسيق وسائل النقل والمقاعد بنجاح
+                أهلاً وسهلاً بجميع الأفراد والأسر، يرجى ملء الاستمارة لتنسيق وسائل النقل والمقاعد بنجاح
             </p>
 
             <!-- COUNTDOWN TIMER SECTION -->
@@ -311,7 +311,7 @@
                         <i class="fa-solid fa-chart-pie text-brand-orange"></i>
                         لوحة إدارة الخرجة العائلية
                     </h2>
-                    <p class="text-xs text-slate-500">إحصائيات فورية وتحديث حي من Firebase</p>
+                    <p class="text-xs text-slate-500">إحصائيات فورية وقائمة التسجيلات</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="exportToCSV()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
@@ -378,58 +378,6 @@
 
     </div>
 
-    <!-- Firebase SDK (Modular v9/v10) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDummyKey_ReplaceIfRequired",
-            authDomain: "hamdi-family-trip.firebaseapp.com",
-            databaseURL: "https://hamdi-family-trip-default-rtdb.firebaseio.com",
-            projectId: "hamdi-family-trip",
-            storageBucket: "hamdi-family-trip.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef123456"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const registrationsRef = ref(database, 'registrations');
-
-        let firebaseRegistrations = [];
-
-        // Realtime Data Sync
-        onValue(registrationsRef, (snapshot) => {
-            const data = snapshot.val();
-            firebaseRegistrations = [];
-            if (data) {
-                Object.keys(data).forEach(key => {
-                    firebaseRegistrations.push({
-                        fbKey: key,
-                        ...data[key]
-                    });
-                });
-            }
-            window.registrationsList = firebaseRegistrations;
-            if (window.isAdminLoggedIn) {
-                window.renderAdminTable();
-            }
-        });
-
-        // Expose functions globally for UI
-        window.saveToFirebase = function(entryData) {
-            return push(registrationsRef, entryData);
-        };
-
-        window.deleteFromFirebase = function(key) {
-            const itemRef = ref(database, 'registrations/' + key);
-            return remove(itemRef);
-        };
-    </script>
-
     <script>
         // Target Date: Friday, Nov 13, 2026 10:00:00 AM
         const targetDate = new Date("Nov 13, 2026 10:00:00").getTime();
@@ -457,7 +405,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        window.registrationsList = [];
+        window.registrationsList = JSON.parse(localStorage.getItem('hamdi_registrations') || '[]');
         window.isAdminLoggedIn = false;
 
         function calculateTotal() {
@@ -480,18 +428,15 @@
             }
         }
 
-        async function handleFormSubmit(e) {
+        function handleFormSubmit(e) {
             e.preventDefault();
             
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>جاري إرسال البيانات...</span>`;
-
             const males = parseInt(document.getElementById('males').value) || 0;
             const females = parseInt(document.getElementById('females').value) || 0;
             const transport = document.querySelector('input[name="transport"]:checked')?.value;
 
             const newEntry = {
+                id: Date.now(),
                 fullName: document.getElementById('fullName').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
                 location: document.getElementById('location').value.trim(),
@@ -505,28 +450,23 @@
                 date: new Date().toLocaleString('ar-DZ')
             };
 
-            try {
-                if (window.saveToFirebase) {
-                    await window.saveToFirebase(newEntry);
-                }
+            // Save to LocalStorage immediately
+            let localData = JSON.parse(localStorage.getItem('hamdi_registrations') || '[]');
+            localData.push(newEntry);
+            localStorage.setItem('hamdi_registrations', JSON.stringify(localData));
+            window.registrationsList = localData;
 
-                confetti({
-                    particleCount: 120,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
+            // Trigger Confetti Animation
+            confetti({
+                particleCount: 120,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
 
-                alert('✅ تم تسجيل بياناتك بنجاح! شكرًا لمشاركتك معنا في الخرجة العائلية.');
-                document.getElementById('tripForm').reset();
-                calculateTotal();
-                toggleTransportFields();
-            } catch (err) {
-                alert('حدث خطأ أثناء الإرسال، نرجو إعادة المحاولة.');
-                console.error(err);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>تأكيد التسجيل في الخرجة</span>`;
-            }
+            alert('✅ تم تسجيل بياناتك بنجاح! شكرًا لمشاركتك معنا في الخرجة العائلية.');
+            document.getElementById('tripForm').reset();
+            calculateTotal();
+            toggleTransportFields();
         }
 
         function switchTab(tab) {
@@ -634,7 +574,7 @@
                     <td class="p-3">${transportBadge}</td>
                     <td class="p-3 text-slate-500 max-w-xs truncate">${item.notes || '-'}</td>
                     <td class="p-3 text-center">
-                        <button onclick="deleteEntry('${item.fbKey}')" class="text-red-500 hover:text-red-700 font-bold px-2 py-1">
+                        <button onclick="deleteEntry(${item.id})" class="text-red-500 hover:text-red-700 font-bold px-2 py-1">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
@@ -643,11 +583,13 @@
             });
         };
 
-        async function deleteEntry(fbKey) {
+        function deleteEntry(id) {
             if (confirm('هل أنت تأكد من حذف هذا التسجيل؟')) {
-                if (window.deleteFromFirebase) {
-                    await window.deleteFromFirebase(fbKey);
-                }
+                let list = JSON.parse(localStorage.getItem('hamdi_registrations') || '[]');
+                list = list.filter(r => r.id !== id);
+                localStorage.setItem('hamdi_registrations', JSON.stringify(list));
+                window.registrationsList = list;
+                window.renderAdminTable();
             }
         }
 
