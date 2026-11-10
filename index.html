@@ -69,7 +69,7 @@
                 الخرجة العائلية <span class="text-brand-orange">لآل حمدي</span> 🌴✨
             </h1>
             <p class="text-slate-600 text-base sm:text-lg font-medium max-w-2xl mx-auto mb-4">
-                 أهلاً وسهلاً بجميع الأفراد والأسر، يرجى ملء الاستمارة لتنسيق وسائل النقل والمقاعد بنجاح
+                  أهلاً وسهلاً بجميع الأفراد والأسر، يرجى ملء الاستمارة لتنسيق وسائل النقل والمقاعد بنجاح
             </p>
 
             <!-- COUNTDOWN TIMER SECTION -->
@@ -110,7 +110,7 @@
             </div>
         </header>
 
-        <!-- TRIP DETAILS & INFORMATION CARD -->
+        <!-- TRIP DETAILS CARD -->
         <section class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
             <div class="border-b border-slate-200 pb-3 flex items-center gap-2">
                 <i class="fa-solid fa-circle-info text-2xl text-brand-orange"></i>
@@ -138,7 +138,7 @@
                     <div>
                         <h3 class="font-bold text-slate-800 text-sm">مكان الخرجة</h3>
                         <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-                            غابة الإخوة بن عمور - بوشاوي 
+                            غابة الإخوة بن عمّور- بوشاوي 
                         </p>
                     </div>
                 </div>
@@ -193,12 +193,12 @@
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-1">الاسم الكامل <span class="text-red-500">*</span></label>
                         <input type="text" id="fullName" required placeholder="مثال: محمد حمدي" 
-                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none transition">
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange outline-none transition">
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-1">رقم الهاتف <span class="text-red-500">*</span></label>
                         <input type="tel" id="phone" required placeholder="06XXXXXXXX" 
-                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none transition text-left dir-ltr">
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange outline-none transition text-left dir-ltr">
                     </div>
                 </div>
 
@@ -206,7 +206,7 @@
                 <div>
                     <label class="block text-sm font-bold text-slate-700 mb-1">مكان الانطلاق <span class="text-red-500">*</span></label>
                     <input type="text" id="location" required placeholder="مثال: الحميز، رغاية، درارية..." 
-                        class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none transition">
+                        class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange outline-none transition">
                 </div>
 
                 <!-- Family Breakdown -->
@@ -276,10 +276,10 @@
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" 
+                <button type="submit" id="submitBtn"
                     class="w-full py-4 bg-gradient-to-r from-brand-orange to-amber-500 hover:from-amber-600 hover:to-brand-orange text-white font-extrabold text-lg rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-paper-plane"></i>
-                    تأكيد التسجيل في الخرجة
+                    <span>تأكيد التسجيل في الخرجة</span>
                 </button>
             </form>
         </main>
@@ -311,7 +311,7 @@
                         <i class="fa-solid fa-chart-pie text-brand-orange"></i>
                         لوحة إدارة الخرجة العائلية
                     </h2>
-                    <p class="text-xs text-slate-500">إحصائيات فورية وقائمة التسجيلات الكاملة</p>
+                    <p class="text-xs text-slate-500">إحصائيات فورية وتحديث حي من Firebase</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="exportToCSV()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
@@ -378,6 +378,58 @@
 
     </div>
 
+    <!-- Firebase SDK (Modular v9/v10) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDummyKey_ReplaceIfRequired",
+            authDomain: "hamdi-family-trip.firebaseapp.com",
+            databaseURL: "https://hamdi-family-trip-default-rtdb.firebaseio.com",
+            projectId: "hamdi-family-trip",
+            storageBucket: "hamdi-family-trip.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:1234567890:web:abcdef123456"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const registrationsRef = ref(database, 'registrations');
+
+        let firebaseRegistrations = [];
+
+        // Realtime Data Sync
+        onValue(registrationsRef, (snapshot) => {
+            const data = snapshot.val();
+            firebaseRegistrations = [];
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    firebaseRegistrations.push({
+                        fbKey: key,
+                        ...data[key]
+                    });
+                });
+            }
+            window.registrationsList = firebaseRegistrations;
+            if (window.isAdminLoggedIn) {
+                window.renderAdminTable();
+            }
+        });
+
+        // Expose functions globally for UI
+        window.saveToFirebase = function(entryData) {
+            return push(registrationsRef, entryData);
+        };
+
+        window.deleteFromFirebase = function(key) {
+            const itemRef = ref(database, 'registrations/' + key);
+            return remove(itemRef);
+        };
+    </script>
+
     <script>
         // Target Date: Friday, Nov 13, 2026 10:00:00 AM
         const targetDate = new Date("Nov 13, 2026 10:00:00").getTime();
@@ -405,9 +457,8 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Data Store using LocalStorage
-        let registrations = JSON.parse(localStorage.getItem('hamdi_registrations') || '[]');
-        let isAdminLoggedIn = false;
+        window.registrationsList = [];
+        window.isAdminLoggedIn = false;
 
         function calculateTotal() {
             const m = parseInt(document.getElementById('males').value) || 0;
@@ -429,15 +480,18 @@
             }
         }
 
-        function handleFormSubmit(e) {
+        async function handleFormSubmit(e) {
             e.preventDefault();
             
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>جاري إرسال البيانات...</span>`;
+
             const males = parseInt(document.getElementById('males').value) || 0;
             const females = parseInt(document.getElementById('females').value) || 0;
             const transport = document.querySelector('input[name="transport"]:checked')?.value;
 
             const newEntry = {
-                id: Date.now(),
                 fullName: document.getElementById('fullName').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
                 location: document.getElementById('location').value.trim(),
@@ -451,19 +505,28 @@
                 date: new Date().toLocaleString('ar-DZ')
             };
 
-            registrations.push(newEntry);
-            localStorage.setItem('hamdi_registrations', JSON.stringify(registrations));
+            try {
+                if (window.saveToFirebase) {
+                    await window.saveToFirebase(newEntry);
+                }
 
-            confetti({
-                particleCount: 120,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+                confetti({
+                    particleCount: 120,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
 
-            alert('✅ تم تسجيل بياناتك بنجاح! شكرًا لمشاركتك معنا في الخرجة العائلية.');
-            document.getElementById('tripForm').reset();
-            calculateTotal();
-            toggleTransportFields();
+                alert('✅ تم تسجيل بياناتك بنجاح! شكرًا لمشاركتك معنا في الخرجة العائلية.');
+                document.getElementById('tripForm').reset();
+                calculateTotal();
+                toggleTransportFields();
+            } catch (err) {
+                alert('حدث خطأ أثناء الإرسال، نرجو إعادة المحاولة.');
+                console.error(err);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>تأكيد التسجيل في الخرجة</span>`;
+            }
         }
 
         function switchTab(tab) {
@@ -482,9 +545,9 @@
                 tabAdminBtn.className = "px-6 py-3 rounded-2xl font-bold transition-all shadow-md bg-white/80 text-slate-700 hover:bg-white flex items-center gap-2";
             } else {
                 formSec.classList.add('hidden');
-                if (isAdminLoggedIn) {
+                if (window.isAdminLoggedIn) {
                     dashSec.classList.remove('hidden');
-                    renderAdminTable();
+                    window.renderAdminTable();
                 } else {
                     authSec.classList.remove('hidden');
                 }
@@ -497,24 +560,27 @@
         function checkAdminPassword() {
             const pwd = document.getElementById('adminPassword').value;
             if (pwd === '1593') {
-                isAdminLoggedIn = true;
+                window.isAdminLoggedIn = true;
                 document.getElementById('adminAuthSection').classList.add('hidden');
                 document.getElementById('adminDashboard').classList.remove('hidden');
-                renderAdminTable();
+                window.renderAdminTable();
             } else {
                 alert('❌ الرقم السري غير صحيح!');
             }
         }
 
         function logoutAdmin() {
-            isAdminLoggedIn = false;
+            window.isAdminLoggedIn = false;
             document.getElementById('adminPassword').value = '';
             switchTab('form');
         }
 
-        function renderAdminTable() {
+        window.renderAdminTable = function() {
             const tbody = document.getElementById('responsesTable');
-            const search = document.getElementById('searchInput').value.toLowerCase();
+            const searchInput = document.getElementById('searchInput');
+            const search = searchInput ? searchInput.value.toLowerCase() : '';
+            if (!tbody) return;
+
             tbody.innerHTML = '';
 
             let statFamilies = 0;
@@ -524,18 +590,20 @@
             let statNeeded = 0;
             let statAvail = 0;
 
-            const filtered = registrations.filter(r => 
-                r.fullName.toLowerCase().includes(search) || 
-                r.location.toLowerCase().includes(search)
+            const list = window.registrationsList || [];
+
+            const filtered = list.filter(r => 
+                (r.fullName && r.fullName.toLowerCase().includes(search)) || 
+                (r.location && r.location.toLowerCase().includes(search))
             );
 
-            registrations.forEach(r => {
+            list.forEach(r => {
                 statFamilies++;
-                statTotal += r.total;
-                statMales += r.males;
-                statFemales += r.females;
-                statNeeded += r.neededSeats;
-                statAvail += r.availableSeats;
+                statTotal += (r.total || 0);
+                statMales += (r.males || 0);
+                statFemales += (r.females || 0);
+                statNeeded += (r.neededSeats || 0);
+                statAvail += (r.availableSeats || 0);
             });
 
             document.getElementById('statFamilies').innerText = statFamilies;
@@ -555,36 +623,37 @@
                 tr.className = "hover:bg-slate-50 transition";
                 
                 let transportBadge = item.transport === 'need' 
-                    ? `<span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-lg font-bold">يحتاج ${item.neededSeats} مقاعد</span>`
-                    : `<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-lg font-bold">لديه ${item.availableSeats} مقاعد شاغرة</span>`;
+                    ? `<span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-lg font-bold">يحتاج ${item.neededSeats || 0} مقاعد</span>`
+                    : `<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-lg font-bold">لديه ${item.availableSeats || 0} مقاعد شاغرة</span>`;
 
                 tr.innerHTML = `
-                    <td class="p-3 font-bold text-slate-900">${item.fullName}</td>
-                    <td class="p-3 dir-ltr text-right">${item.phone}</td>
-                    <td class="p-3">${item.location}</td>
-                    <td class="p-3 text-center font-bold">${item.total} (${item.males} ذ / ${item.females} إ)</td>
+                    <td class="p-3 font-bold text-slate-900">${item.fullName || ''}</td>
+                    <td class="p-3 dir-ltr text-right">${item.phone || ''}</td>
+                    <td class="p-3">${item.location || ''}</td>
+                    <td class="p-3 text-center font-bold">${item.total || 0} (${item.males || 0} ذ / ${item.females || 0} إ)</td>
                     <td class="p-3">${transportBadge}</td>
                     <td class="p-3 text-slate-500 max-w-xs truncate">${item.notes || '-'}</td>
                     <td class="p-3 text-center">
-                        <button onclick="deleteEntry(${item.id})" class="text-red-500 hover:text-red-700 font-bold px-2 py-1">
+                        <button onclick="deleteEntry('${item.fbKey}')" class="text-red-500 hover:text-red-700 font-bold px-2 py-1">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
-        }
+        };
 
-        function deleteEntry(id) {
+        async function deleteEntry(fbKey) {
             if (confirm('هل أنت تأكد من حذف هذا التسجيل؟')) {
-                registrations = registrations.filter(r => r.id !== id);
-                localStorage.setItem('hamdi_registrations', JSON.stringify(registrations));
-                renderAdminTable();
+                if (window.deleteFromFirebase) {
+                    await window.deleteFromFirebase(fbKey);
+                }
             }
         }
 
         function exportToCSV() {
-            if (registrations.length === 0) {
+            const list = window.registrationsList || [];
+            if (list.length === 0) {
                 alert('لا توجد بيانات لتصديرها!');
                 return;
             }
@@ -592,9 +661,9 @@
             let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
             csvContent += "الاسم الكامل,رقم الهاتف,مكان الانطلاق,مجموع الأفراد,الذكور,الإناث,وسيلة النقل,المقاعد المطلوبة,المقاعد الشاغرة,الملاحظات,تاريخ التسجيل\n";
 
-            registrations.forEach(r => {
+            list.forEach(r => {
                 const transportText = r.transport === 'need' ? 'يحتاج ركوب' : 'لديه سيارة';
-                csvContent += `"${r.fullName}","${r.phone}","${r.location}",${r.total},${r.males},${r.females},"${transportText}",${r.neededSeats},${r.availableSeats},"${r.notes || ''}","${r.date}"\n`;
+                csvContent += `"${r.fullName || ''}","${r.phone || ''}","${r.location || ''}",${r.total || 0},${r.males || 0},${r.females || 0},"${transportText}",${r.neededSeats || 0},${r.availableSeats || 0},"${r.notes || ''}","${r.date || ''}"\n`;
             });
 
             const encodedUri = encodeURI(csvContent);
