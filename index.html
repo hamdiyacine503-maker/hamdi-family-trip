@@ -138,7 +138,7 @@
                     <div>
                         <h3 class="font-bold text-slate-800 text-sm">مكان الخرجة</h3>
                         <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-                            غابة الإخوة بن عمّور- بوشاوي 
+                            غابة الإخوة بن عمّور - بوشاوي
                         </p>
                     </div>
                 </div>
@@ -311,7 +311,7 @@
                         <i class="fa-solid fa-chart-pie text-brand-orange"></i>
                         لوحة إدارة الخرجة العائلية
                     </h2>
-                    <p class="text-xs text-slate-500">إحصائيات فورية وقائمة التسجيلات</p>
+                    <p class="text-xs text-slate-500">إحصائيات فورية وتحديث حي للبيانات</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="exportToCSV()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
@@ -378,6 +378,48 @@
 
     </div>
 
+    <!-- Firebase SDK Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // Global Database Realtime Connection
+        const firebaseConfig = {
+            databaseURL: "https://hamdi-family-trip-default-rtdb.europe-west1.firebasedatabase.app"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const registrationsRef = ref(database, 'registrations');
+
+        // Realtime Listener for cross-device sync
+        onValue(registrationsRef, (snapshot) => {
+            const data = snapshot.val();
+            const list = [];
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    list.push({
+                        fbKey: key,
+                        ...data[key]
+                    });
+                });
+            }
+            window.registrationsList = list;
+            if (window.isAdminLoggedIn) {
+                window.renderAdminTable();
+            }
+        });
+
+        window.saveToFirebase = function(entryData) {
+            return push(registrationsRef, entryData);
+        };
+
+        window.deleteFromFirebase = function(key) {
+            const itemRef = ref(database, 'registrations/' + key);
+            return remove(itemRef);
+        };
+    </script>
+
     <script>
         // Target Date: Friday, Nov 13, 2026 10:00:00 AM
         const targetDate = new Date("Nov 13, 2026 10:00:00").getTime();
@@ -405,7 +447,7 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        window.registrationsList = JSON.parse(localStorage.getItem('hamdi_registrations') || '[]');
+        window.registrationsList = [];
         window.isAdminLoggedIn = false;
 
         function calculateTotal() {
@@ -428,15 +470,18 @@
             }
         }
 
-        function handleFormSubmit(e) {
+        async function handleFormSubmit(e) {
             e.preventDefault();
             
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>جاري إرسال البيانات...</span>`;
+
             const males = parseInt(document.getElementById('males').value) || 0;
             const females = parseInt(document.getElementById('females').value) || 0;
             const transport = document.querySelector('input[name="transport"]:checked')?.value;
 
             const newEntry = {
-                id: Date.now(),
                 fullName: document.getElementById('fullName').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
                 location: document.getElementById('location').value.trim(),
@@ -450,23 +495,28 @@
                 date: new Date().toLocaleString('ar-DZ')
             };
 
-            // Save to LocalStorage immediately
-            let localData = JSON.parse(localStorage.getItem('hamdi_registrations') || '[]');
-            localData.push(newEntry);
-            localStorage.setItem('hamdi_registrations', JSON.stringify(localData));
-            window.registrationsList = localData;
+            try {
+                if (window.saveToFirebase) {
+                    await window.saveToFirebase(newEntry);
+                }
 
-            // Trigger Confetti Animation
-            confetti({
-                particleCount: 120,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+                confetti({
+                    particleCount: 120,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
 
-            alert('✅ تم تسجيل بياناتك بنجاح! شكرًا لمشاركتك معنا في الخرجة العائلية.');
-            document.getElementById('tripForm').reset();
-            calculateTotal();
-            toggleTransportFields();
+                alert('✅ تم تسجيل بياناتك بنجاح! شكرًا لمشاركتك معنا في الخرجة العائلية.');
+                document.getElementById('tripForm').reset();
+                calculateTotal();
+                toggleTransportFields();
+            } catch (err) {
+                alert('حدث خطأ أثناء الإرسال، نرجو إعادة المحاولة.');
+                console.error(err);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>تأكيد التسجيل في الخرجة</span>`;
+            }
         }
 
         function switchTab(tab) {
@@ -574,7 +624,7 @@
                     <td class="p-3">${transportBadge}</td>
                     <td class="p-3 text-slate-500 max-w-xs truncate">${item.notes || '-'}</td>
                     <td class="p-3 text-center">
-                        <button onclick="deleteEntry(${item.id})" class="text-red-500 hover:text-red-700 font-bold px-2 py-1">
+                        <button onclick="deleteEntry('${item.fbKey}')" class="text-red-500 hover:text-red-700 font-bold px-2 py-1">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
@@ -583,13 +633,11 @@
             });
         };
 
-        function deleteEntry(id) {
+        async function deleteEntry(fbKey) {
             if (confirm('هل أنت تأكد من حذف هذا التسجيل؟')) {
-                let list = JSON.parse(localStorage.getItem('hamdi_registrations') || '[]');
-                list = list.filter(r => r.id !== id);
-                localStorage.setItem('hamdi_registrations', JSON.stringify(list));
-                window.registrationsList = list;
-                window.renderAdminTable();
+                if (window.deleteFromFirebase) {
+                    await window.deleteFromFirebase(fbKey);
+                }
             }
         }
 
