@@ -3,1002 +3,554 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخرجة العائلية لأبناء عائلة آل حمدي 🌴🚌</title>
-    <!-- Tailwind CSS -->
+    <title>الخرجة العائلية - آل حمدي</title>
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
                     colors: {
                         brand: {
                             orange: '#FF6B35',
+                            yellow: '#F7C59F',
                             teal: '#00A896',
                             blue: '#028090',
-                            sky: '#E8F1F2',
-                            yellow: '#F4A261',
-                            dark: '#1D3557'
+                            dark: '#05668D'
                         }
-                    },
-                    fontFamily: {
-                        tajawal: ['Tajawal', 'sans-serif']
                     }
                 }
             }
         }
     </script>
-    <!-- Google Fonts: Tajawal -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Canvas Confetti Library -->
+    
+    <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
+            background: linear-gradient(135deg, #05668D 0%, #028090 40%, #00A896 75%, #F7C59F 100%);
             background-attachment: fixed;
-            background-image: radial-gradient(#00A896 0.5px, transparent 0.5px), radial-gradient(#FF6B35 0.5px, #f4f7f6 0.5px);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
+            min-height: 100vh;
         }
-
         .glass-card {
-            background: rgba(255, 255, 255, 0.93);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-        .glass-nav {
-            background: rgba(29, 53, 87, 0.95);
-            backdrop-filter: blur(8px);
-        }
-
-        @keyframes subtleBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-        .bounce-subtle {
-            animation: subtleBounce 3s infinite ease-in-out;
-        }
-
-        @media print {
-            header, footer, #toggleAdminBtn, .no-print {
-                display: none !important;
-            }
-            #adminDashboardModal {
-                position: static !important;
-                background: white !important;
-                backdrop-filter: none !important;
-            }
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
     </style>
 </head>
-<body class="min-h-screen text-slate-800 flex flex-col justify-between">
+<body class="font-sans text-slate-800 antialiased py-6 px-4 sm:px-6 lg:px-8">
 
-    <!-- Navbar Header -->
-    <header class="glass-nav text-white sticky top-0 z-40 shadow-lg border-b border-teal-500/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-orange to-brand-yellow flex items-center justify-center text-white text-2xl shadow-md transform rotate-3">
-                    <i class="fa-solid fa-car-side"></i>
+    <div class="max-w-4xl mx-auto space-y-6">
+
+        <!-- Header Banner -->
+        <header class="glass-card rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-brand-orange opacity-20 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-brand-teal opacity-20 rounded-full blur-2xl"></div>
+
+            <div class="inline-flex items-center gap-2 bg-orange-100 text-brand-orange px-4 py-1.5 rounded-full font-bold text-sm mb-3 shadow-sm">
+                <i class="fa-solid fa-heart"></i>
+                لمّ شمل العائلة
+            </div>
+            
+            <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mb-2">
+                الخرجة العائلية <span class="text-brand-orange">لآل حمدي</span> 🌴✨
+            </h1>
+            <p class="text-slate-600 text-base sm:text-lg font-medium max-w-2xl mx-auto mb-4">
+                العاصمة وضواحيها • يرجى ملء الاستمارة لتنسيق وسائل النقل والمقاعد بنجاح.
+            </p>
+
+            <!-- COUNTDOWN TIMER SECTION -->
+            <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-2xl p-4 sm:p-5 max-w-xl mx-auto my-4 shadow-xl border border-white/10">
+                <div class="text-xs sm:text-sm font-bold text-amber-400 mb-2 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-clock"></i>
+                    موعد الخرجة: الجمعة 13 نوفمبر 2026 - 10:00 صباحاً
                 </div>
-                <div>
-                    <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
-                        آل حَمْدِي <span class="text-xs bg-brand-orange text-white px-2.5 py-0.5 rounded-full font-bold">الخرجة العائلية</span>
-                    </h1>
-                    <p class="text-xs text-teal-200">الجزائر العاصمة وضواحيها</p>
+                <div class="grid grid-cols-4 gap-2 text-center" id="countdownBox">
+                    <div class="bg-white/10 rounded-xl p-2 backdrop-blur-sm">
+                        <span id="days" class="block text-2xl sm:text-4xl font-black text-brand-orange">00</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 font-bold">أيام</span>
+                    </div>
+                    <div class="bg-white/10 rounded-xl p-2 backdrop-blur-sm">
+                        <span id="hours" class="block text-2xl sm:text-4xl font-black text-amber-300">00</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 font-bold">ساعات</span>
+                    </div>
+                    <div class="bg-white/10 rounded-xl p-2 backdrop-blur-sm">
+                        <span id="minutes" class="block text-2xl sm:text-4xl font-black text-teal-300">00</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 font-bold">دقائق</span>
+                    </div>
+                    <div class="bg-white/10 rounded-xl p-2 backdrop-blur-sm">
+                        <span id="seconds" class="block text-2xl sm:text-4xl font-black text-sky-300">00</span>
+                        <span class="text-[10px] sm:text-xs text-slate-300 font-bold">ثواني</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <button id="toggleAdminBtn" onclick="openAdminModal()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium px-4 py-2 rounded-xl transition duration-200 text-sm border border-white/20 shadow-sm">
-                    <i class="fa-solid fa-user-shield text-brand-yellow"></i>
-                    <span class="hidden sm:inline">لوحة المشرف</span>
-                </button>
+            <div class="mt-4 inline-flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm font-bold">
+                <div class="bg-white/80 px-4 py-2 rounded-xl shadow-sm text-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-location-dot text-brand-orange"></i>
+                    الجزائر العاصمة
+                </div>
+                <div class="bg-white/80 px-4 py-2 rounded-xl shadow-sm text-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-car text-brand-teal"></i>
+                    تنسيق السيارات والمقاعد
+                </div>
             </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="flex justify-center gap-3">
+            <button id="tabFormBtn" onclick="switchTab('form')" class="px-6 py-3 rounded-2xl font-bold transition-all shadow-md bg-brand-orange text-white flex items-center gap-2">
+                <i class="fa-solid fa-pen-to-square"></i>
+                استمارة التسجيل
+            </button>
+            <button id="tabAdminBtn" onclick="switchTab('admin')" class="px-6 py-3 rounded-2xl font-bold transition-all shadow-md bg-white/80 text-slate-700 hover:bg-white flex items-center gap-2">
+                <i class="fa-solid fa-user-shield"></i>
+                لوحة المشرف
+            </button>
         </div>
-    </header>
 
-    <!-- Main Content Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow">
+        <!-- FORM SECTION -->
+        <main id="formSection" class="glass-card rounded-3xl p-6 sm:p-10 transition-all">
+            <div class="border-b border-slate-200 pb-4 mb-6">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-clipboard-user text-brand-orange"></i>
+                    بيانات الحضور وتفاصيل العائلة
+                </h2>
+                <p class="text-xs text-slate-500 mt-1">يرجى إدخال البيانات بدقة لمساعدتنا في التنظيم</p>
+            </div>
 
-        <!-- Hero & Countdown Section -->
-        <section class="mb-10 text-center">
-            <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-xl border-t-4 border-brand-orange relative overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-32 h-32 bg-brand-yellow/20 rounded-full blur-2xl"></div>
-                <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-brand-teal/20 rounded-full blur-2xl"></div>
+            <form id="tripForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                
+                <!-- Name & Phone -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">الاسم الكامل <span class="text-red-500">*</span></label>
+                        <input type="text" id="fullName" required placeholder="مثال: محمد حمدي" 
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">رقم الهاتف <span class="text-red-500">*</span></label>
+                        <input type="tel" id="phone" required placeholder="06XXXXXXXX" 
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none transition text-left dir-ltr">
+                    </div>
+                </div>
 
-                <div class="relative z-10">
-                    <span class="inline-block bg-teal-100 text-brand-teal text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full mb-3 shadow-inner">
-                        <i class="fa-solid fa-heart text-red-500 ml-1"></i> ملتقى الأحبة والأقارب
-                    </span>
-                    <h2 class="text-2xl sm:text-4xl font-extrabold text-brand-dark mb-3">
-                        الخرجة العائلية الكبرى لأبناء عائلة آل حمدي 🌴🚌
-                    </h2>
-                    <p class="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base mb-6 leading-relaxed">
-                        مرحباً بكم يا أغلى الأحباب! يسعدنا تسجيل حضوركم ومشاركتكم لتنظيم أفضل وسيلة نقل وضمان راحة الجميع من كل أحياء الجزائر العاصمة وضواحيها.
-                    </p>
+                <!-- Departure Location -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">مكان الانطلاق <span class="text-red-500">*</span></label>
+                    <input type="text" id="location" required placeholder="مثال: الحميز، رغاية، درارية..." 
+                        class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange focus:border-brand-orange outline-none transition">
+                </div>
 
-                    <!-- Countdown Timer -->
-                    <div class="bg-gradient-to-r from-brand-dark to-slate-800 text-white rounded-2xl p-4 sm:p-6 max-w-2xl mx-auto shadow-lg">
-                        <p class="text-xs text-brand-yellow font-bold mb-3 uppercase tracking-wider">
-                            <i class="fa-regular fa-clock ml-1"></i> الموعد المرتقب للخرجة
-                        </p>
-                        <div class="grid grid-cols-4 gap-2 sm:gap-4 text-center" id="countdown">
-                            <div class="bg-white/10 rounded-xl p-2 sm:p-3 border border-white/10">
-                                <span id="days" class="block text-xl sm:text-3xl font-black text-white">00</span>
-                                <span class="text-[10px] sm:text-xs text-slate-300">يوم</span>
-                            </div>
-                            <div class="bg-white/10 rounded-xl p-2 sm:p-3 border border-white/10">
-                                <span id="hours" class="block text-xl sm:text-3xl font-black text-white">00</span>
-                                <span class="text-[10px] sm:text-xs text-slate-300">ساعة</span>
-                            </div>
-                            <div class="bg-white/10 rounded-xl p-2 sm:p-3 border border-white/10">
-                                <span id="minutes" class="block text-xl sm:text-3xl font-black text-white">00</span>
-                                <span class="text-[10px] sm:text-xs text-slate-300">دقيقة</span>
-                            </div>
-                            <div class="bg-white/10 rounded-xl p-2 sm:p-3 border border-white/10">
-                                <span id="seconds" class="block text-xl sm:text-3xl font-black text-white">00</span>
-                                <span class="text-[10px] sm:text-xs text-slate-300">ثانية</span>
-                            </div>
+                <!-- Family Breakdown -->
+                <div class="bg-orange-50/70 p-4 rounded-2xl border border-orange-100">
+                    <label class="block text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-users text-brand-orange"></i>
+                        عدد أفراد العائلة المشاركين <span class="text-red-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">عدد الذكور</label>
+                            <input type="number" id="males" min="0" value="1" required onchange="calculateTotal()" oninput="calculateTotal()"
+                                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange outline-none text-center font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">عدد الإناث</label>
+                            <input type="number" id="females" min="0" value="0" required onchange="calculateTotal()" oninput="calculateTotal()"
+                                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange outline-none text-center font-bold">
                         </div>
                     </div>
+                    <div class="mt-3 text-left">
+                        <span class="text-xs font-bold text-slate-500">الإجمالي: </span>
+                        <span id="totalCount" class="text-base font-black text-brand-orange">1</span>
+                        <span class="text-xs font-bold text-slate-500"> أفراد</span>
+                    </div>
+                </div>
+
+                <!-- Transport Options -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">حالة وسيلة النقل <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="border-2 border-slate-200 p-4 rounded-2xl cursor-pointer hover:border-brand-orange transition flex items-center gap-3">
+                            <input type="radio" name="transport" value="need" required onchange="toggleTransportFields()" class="accent-brand-orange w-5 h-5">
+                            <div>
+                                <div class="font-bold text-slate-800 text-sm">أحتاج إلى ركوب 🚌</div>
+                                <div class="text-xs text-slate-500">ليس لدي سيارة أو لا تكفي عائلتي</div>
+                            </div>
+                        </label>
+                        <label class="border-2 border-slate-200 p-4 rounded-2xl cursor-pointer hover:border-brand-teal transition flex items-center gap-3">
+                            <input type="radio" name="transport" value="have" required onchange="toggleTransportFields()" class="accent-brand-teal w-5 h-5">
+                            <div>
+                                <div class="font-bold text-slate-800 text-sm">لدي سيارة بمقاعد شاغرة 🚗</div>
+                                <div class="text-xs text-slate-500">يمكنني نقل أفراد إضافيين معي</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Dynamic Transport Details -->
+                <div id="needSeatContainer" class="hidden bg-blue-50/70 p-4 rounded-2xl border border-blue-100">
+                    <label class="block text-sm font-bold text-slate-700 mb-1">كم مقعداً تحتاج لمرافقتك؟</label>
+                    <input type="number" id="neededSeats" min="1" value="1" 
+                        class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-blue outline-none text-center font-bold">
+                </div>
+
+                <div id="haveSeatContainer" class="hidden bg-teal-50/70 p-4 rounded-2xl border border-teal-100">
+                    <label class="block text-sm font-bold text-slate-700 mb-1">كم مقعداً شاغراً لديك في السيارة؟</label>
+                    <input type="number" id="availableSeats" min="1" value="2" 
+                        class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-teal outline-none text-center font-bold">
+                </div>
+
+                <!-- Notes -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">ملاحظات أو اقتراحات إضافية</label>
+                    <textarea id="notes" rows="2" placeholder="أي معلومات أو ترتيبات خاصة تود إعلامنا بها..." 
+                        class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-orange outline-none transition"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" 
+                    class="w-full py-4 bg-gradient-to-r from-brand-orange to-amber-500 hover:from-amber-600 hover:to-brand-orange text-white font-extrabold text-lg rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    تأكيد التسجيل في الخرجة
+                </button>
+            </form>
+        </main>
+
+        <!-- ADMIN LOGIN SECTION -->
+        <section id="adminAuthSection" class="hidden glass-card rounded-3xl p-8 max-w-md mx-auto text-center space-y-4">
+            <div class="w-16 h-16 bg-orange-100 text-brand-orange rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 class="text-2xl font-black text-slate-900">دخول المشرف</h2>
+            <p class="text-xs text-slate-500">أدخل الرقم السري للوصول إلى الإحصائيات والإجابات</p>
+            
+            <input type="password" id="adminPassword" placeholder="الرقم السري" 
+                class="w-full px-4 py-3 rounded-xl border border-slate-300 text-center text-xl tracking-widest outline-none focus:ring-2 focus:ring-brand-orange">
+            
+            <button onclick="checkAdminPassword()" 
+                class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow transition">
+                الدخول للوحة التحكم
+            </button>
+        </section>
+
+        <!-- ADMIN DASHBOARD SECTION -->
+        <section id="adminDashboard" class="hidden space-y-6">
+            
+            <!-- Dashboard Top Control -->
+            <div class="glass-card rounded-3xl p-6 flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-brand-orange"></i>
+                        لوحة إدارة الخرجة العائلية
+                    </h2>
+                    <p class="text-xs text-slate-500">إحصائيات فورية وقائمة التسجيلات الكاملة</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="exportToCSV()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-excel"></i>
+                        تصدير Excel
+                    </button>
+                    <button onclick="logoutAdmin()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition">
+                        خروج
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <div class="text-xs font-bold text-slate-500 mb-1">إجمالي العائلات</div>
+                    <div id="statFamilies" class="text-2xl sm:text-3xl font-black text-slate-900">0</div>
+                </div>
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <div class="text-xs font-bold text-slate-500 mb-1">مجموع المشاركين</div>
+                    <div id="statTotalPeople" class="text-2xl sm:text-3xl font-black text-brand-orange">0</div>
+                    <div class="text-[10px] text-slate-500 mt-1">
+                        ذكور: <span id="statMales">0</span> | إناث: <span id="statFemales">0</span>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <div class="text-xs font-bold text-slate-500 mb-1">مقاعد مطلوبة</div>
+                    <div id="statNeededSeats" class="text-2xl sm:text-3xl font-black text-blue-600">0</div>
+                </div>
+                <div class="glass-card rounded-2xl p-4 text-center">
+                    <div class="text-xs font-bold text-slate-500 mb-1">مقاعد شاغرة</div>
+                    <div id="statAvailableSeats" class="text-2xl sm:text-3xl font-black text-emerald-600">0</div>
+                </div>
+            </div>
+
+            <!-- Table Container -->
+            <div class="glass-card rounded-3xl p-6 overflow-hidden">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-4">
+                    <h3 class="font-bold text-slate-800 text-base">قائمة المسجلين بالتفصيل</h3>
+                    <input type="text" id="searchInput" oninput="renderAdminTable()" placeholder="بحث باسم الفرد أو الحي..." 
+                        class="w-full sm:w-64 px-4 py-2 rounded-xl border border-slate-200 text-xs outline-none focus:ring-2 focus:ring-brand-orange">
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs text-slate-700">
+                        <thead class="bg-slate-100 text-slate-900 font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="p-3">الاسم الكامل</th>
+                                <th class="p-3">الهاتف</th>
+                                <th class="p-3">مكان الانطلاق</th>
+                                <th class="p-3 text-center">العدد (ذ/إ)</th>
+                                <th class="p-3">وضع السيارة</th>
+                                <th class="p-3">ملاحظات</th>
+                                <th class="p-3 text-center">إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="responsesTable" class="divide-y divide-slate-100">
+                            <!-- Rows loaded dynamically -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
 
-        <!-- Main Form Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-            <!-- Registration Form (8 cols) -->
-            <div class="lg:col-span-8">
-                <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl relative">
-                    <div class="flex items-center gap-3 border-b border-slate-200 pb-4 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-brand-teal text-white flex items-center justify-center font-bold text-lg">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-brand-dark">استمارة تأكيد الحضور</h3>
-                            <p class="text-xs text-slate-500">يرجى ملء البيانات بدقة لمساعدتنا في التنظيم</p>
-                        </div>
-                    </div>
-
-                    <form id="registrationForm" onsubmit="handleFormSubmit(event)" class="space-y-6">
-                        
-                        <!-- Full Name -->
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2" for="fullName">
-                                الاسم الكامل 👤 <span class="text-red-500">*</span>
-                            </label>
-                            <input type="text" id="fullName" required placeholder="مثال: محمد آل حمدي" 
-                                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-teal focus:border-brand-teal outline-none transition bg-white/80">
-                        </div>
-
-                        <!-- Family Members Split -->
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-50/80 p-4 rounded-2xl border border-slate-200">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1" for="maleCount">
-                                    عدد الذكور 👨
-                                </label>
-                                <input type="number" id="maleCount" min="0" value="1" onchange="calculateTotal()" oninput="calculateTotal()"
-                                    class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-teal outline-none bg-white text-center font-bold">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1" for="femaleCount">
-                                    عدد الإناث 👩
-                                </label>
-                                <input type="number" id="femaleCount" min="0" value="0" onchange="calculateTotal()" oninput="calculateTotal()"
-                                    class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-teal outline-none bg-white text-center font-bold">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-brand-dark mb-1">
-                                    الإجمالي 👨‍👩‍👧‍👦
-                                </label>
-                                <div id="totalMembers" class="w-full px-3 py-2 rounded-lg bg-brand-teal/10 border border-brand-teal/30 text-brand-teal font-extrabold text-center">
-                                    1 فرد
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Location & Phone -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2" for="location">
-                                    مكان الانطلاق 📍 <span class="text-red-500">*</span>
-                                </label>
-                                <input type="text" id="location" required placeholder="مثال: الحميز، القبة، برج الكيفان..." 
-                                    list="locationsList" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-teal outline-none transition bg-white/80">
-                                <datalist id="locationsList">
-                                    <option value="الحميز"></option>
-                                    <option value="القبة"></option>
-                                    <option value="برج الكيفان"></option>
-                                    <option value="الرويبة"></option>
-                                    <option value="باب الزوار"></option>
-                                    <option value="بئر خادم"></option>
-                                    <option value="الشراقة"></option>
-                                    <option value="عين طاية"></option>
-                                    <option value="الدار البيضاء"></option>
-                                </datalist>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2" for="phone">
-                                    رقم الهاتف للتواصل 📱 <span class="text-red-500">*</span>
-                                </label>
-                                <input type="tel" id="phone" required placeholder="06XX XX XX XX" 
-                                    class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-teal outline-none transition bg-white/80 text-left" dir="ltr">
-                            </div>
-                        </div>
-
-                        <!-- Transport Status Radio Cards -->
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-3">
-                                حالة النقل والسيارات 🚗 <span class="text-red-500">*</span>
-                            </label>
-                            
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <!-- Option 1: Need Ride -->
-                                <label class="relative flex flex-col p-4 cursor-pointer rounded-2xl border-2 border-slate-200 hover:border-brand-orange transition bg-white group shadow-sm">
-                                    <input type="radio" name="transportStatus" value="need_ride" onchange="handleTransportChange(this.value)" required class="sr-only peer">
-                                    <div class="peer-checked:border-brand-orange peer-checked:bg-orange-50/50 absolute inset-0 rounded-2xl border-2 border-transparent transition"></div>
-                                    <div class="relative z-10 flex flex-col items-center text-center">
-                                        <div class="w-10 h-10 rounded-full bg-orange-100 text-brand-orange flex items-center justify-center mb-2 font-bold text-lg">
-                                            <i class="fa-solid fa-person-walking-luggage"></i>
-                                        </div>
-                                        <span class="font-bold text-sm text-slate-800">أحتاج إلى ركوب</span>
-                                        <span class="text-[11px] text-slate-500 mt-1">ليس لدي سيارة في الخرجة</span>
-                                    </div>
-                                </label>
-
-                                <!-- Option 2: Have Seats -->
-                                <label class="relative flex flex-col p-4 cursor-pointer rounded-2xl border-2 border-slate-200 hover:border-brand-teal transition bg-white group shadow-sm">
-                                    <input type="radio" name="transportStatus" value="have_seats" onchange="handleTransportChange(this.value)" required class="sr-only peer">
-                                    <div class="peer-checked:border-brand-teal peer-checked:bg-teal-50/50 absolute inset-0 rounded-2xl border-2 border-transparent transition"></div>
-                                    <div class="relative z-10 flex flex-col items-center text-center">
-                                        <div class="w-10 h-10 rounded-full bg-teal-100 text-brand-teal flex items-center justify-center mb-2 font-bold text-lg">
-                                            <i class="fa-solid fa-car-side"></i>
-                                        </div>
-                                        <span class="font-bold text-sm text-slate-800">لدي سيارة بمقاعد</span>
-                                        <span class="text-[11px] text-slate-500 mt-1">يمكنني إركاب أقاربي معي</span>
-                                    </div>
-                                </label>
-
-                                <!-- Option 3: Own Transport / Full -->
-                                <label class="relative flex flex-col p-4 cursor-pointer rounded-2xl border-2 border-slate-200 hover:border-brand-blue transition bg-white group shadow-sm">
-                                    <input type="radio" name="transportStatus" value="full_car" onchange="handleTransportChange(this.value)" required class="sr-only peer">
-                                    <div class="peer-checked:border-brand-blue peer-checked:bg-blue-50/50 absolute inset-0 rounded-2xl border-2 border-transparent transition"></div>
-                                    <div class="relative z-10 flex flex-col items-center text-center">
-                                        <div class="w-10 h-10 rounded-full bg-blue-100 text-brand-blue flex items-center justify-center mb-2 font-bold text-lg">
-                                            <i class="fa-solid fa-circle-check"></i>
-                                        </div>
-                                        <span class="font-bold text-sm text-slate-800">سيارتي ممتلئة</span>
-                                        <span class="text-[11px] text-slate-500 mt-1">سأتحرك بمفردي / مستكفي</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Dynamic Transport Input Sub-fields -->
-                        <div id="seatsNeededContainer" class="hidden bg-orange-50 border border-orange-200 p-4 rounded-2xl">
-                            <label class="block text-sm font-bold text-brand-orange mb-2" for="seatsNeeded">
-                                عدد المقاعد المطلوبة للركوب 🪑
-                            </label>
-                            <input type="number" id="seatsNeeded" min="1" max="15" value="1" 
-                                class="w-full px-4 py-2.5 rounded-xl border border-orange-300 focus:ring-2 focus:ring-brand-orange outline-none bg-white font-bold text-slate-800">
-                            <p class="text-xs text-slate-500 mt-1">سنحرص على توفيرها لك ولعائلتك قدر الإمكان.</p>
-                        </div>
-
-                        <div id="seatsAvailableContainer" class="hidden bg-teal-50 border border-teal-200 p-4 rounded-2xl">
-                            <label class="block text-sm font-bold text-brand-teal mb-2" for="seatsAvailable">
-                                عدد المقاعد الشاغرة المتاحة لديك 💺
-                            </label>
-                            <input type="number" id="seatsAvailable" min="1" max="10" value="2" 
-                                class="w-full px-4 py-2.5 rounded-xl border border-teal-300 focus:ring-2 focus:ring-brand-teal outline-none bg-white font-bold text-slate-800">
-                            <p class="text-xs text-slate-500 mt-1">بارك الله فيك، كم مقعداً يمكنك مشاركته مع أفراد العائلة؟</p>
-                        </div>
-
-                        <!-- Notes & Suggestions -->
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2" for="notes">
-                                ملاحظات أو اقتراحات للخرجة ✍️ <span class="text-xs font-normal text-slate-400">(اختياري)</span>
-                            </label>
-                            <textarea id="notes" rows="3" placeholder="أفكار لألعاب، أماكن مفضلة، أو استفسارات..." 
-                                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-teal outline-none transition bg-white/80"></textarea>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <button type="submit" class="w-full bg-gradient-to-r from-brand-orange via-orange-500 to-brand-yellow hover:from-orange-600 hover:to-orange-500 text-white font-black py-4 px-6 rounded-2xl shadow-lg hover:shadow-orange-500/30 transform hover:-translate-y-0.5 transition duration-200 text-lg flex items-center justify-center gap-3">
-                            <i class="fa-solid fa-paper-plane"></i>
-                            <span>تأكيد التسجيل وإرسال البيانات</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Side Quick Info Cards (4 cols) -->
-            <div class="lg:col-span-4 space-y-6">
-                <!-- Trip Program Card -->
-                <div class="glass-card rounded-3xl p-6 shadow-xl border-t-4 border-brand-teal">
-                    <h4 class="text-lg font-bold text-brand-dark mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-compass text-brand-teal"></i> معلومات وتفاصيل الخرجة
-                    </h4>
-                    <ul class="space-y-4 text-sm text-slate-600">
-                        <li class="flex items-start gap-3">
-                            <span class="w-8 h-8 rounded-lg bg-teal-100 text-brand-teal flex items-center justify-center shrink-0 font-bold">
-                                <i class="fa-solid fa-map-pin"></i>
-                            </span>
-                            <div>
-                                <strong class="block text-slate-800">الوجهة:</strong>
-                                غابة الإخوة بن عمور - بوشاوي
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-8 h-8 rounded-lg bg-orange-100 text-brand-orange flex items-center justify-center shrink-0 font-bold">
-                                <i class="fa-regular fa-calendar-check"></i>
-                            </span>
-                            <div>
-                                <strong class="block text-slate-800">التاريخ المفترض:</strong>
-                                الجمعة القادمة (الانطلاق:  10:00 صباحاً)
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-8 h-8 rounded-lg bg-yellow-100 text-brand-yellow flex items-center justify-center shrink-0 font-bold">
-                                <i class="fa-solid fa-utensils"></i>
-                            </span>
-                            <div>
-                                <strong class="block text-slate-800">الإطعام والأنشطة:</strong>
-                                غداء جماعي عائلي، ألعاب للأطفال، ومسابقات ثقافية.
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Live Quick Counter Summary -->
-                <div class="glass-card rounded-3xl p-6 shadow-xl border-t-4 border-brand-dark">
-                    <h4 class="text-lg font-bold text-brand-dark mb-3 flex items-center justify-between">
-                        <span>إحصائيات فورية</span>
-                        <span class="text-xs font-normal text-slate-400">مباشر</span>
-                    </h4>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-slate-100/80 p-3 rounded-xl text-center">
-                            <span class="block text-xs text-slate-500">المسجلين حتى الآن</span>
-                            <span id="quickTotalRegistrations" class="text-xl font-black text-brand-dark">0</span>
-                        </div>
-                        <div class="bg-teal-50 p-3 rounded-xl text-center">
-                            <span class="block text-xs text-slate-500">المقاعد المتاحة</span>
-                            <span id="quickAvailableSeats" class="text-xl font-black text-brand-teal">0</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact Admin Box -->
-                <div class="glass-card rounded-3xl p-5 shadow-lg bg-gradient-to-br from-brand-dark to-slate-900 text-white text-center">
-                    <i class="fa-solid fa-headset text-3xl text-brand-yellow mb-2"></i>
-                    <h5 class="font-bold text-sm mb-1">هل لديك سؤال أو استفسار؟</h5>
-                    <p class="text-xs text-slate-300 mb-3">يمكنك التواصل المباشر مع لجنة تنظيم خرجة آل حمدي</p>
-                    <a href="tel:0600000000" class="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition">
-                        <i class="fa-solid fa-phone"></i> اتصل بالمنسق
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-brand-dark text-white border-t border-slate-700 py-6 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-sm text-slate-300 font-medium">
-                ❤️ تم تطوير هذه المنصة بـ حب لعائلة آل حمدي الكريمة
-            </p>
-            <p class="text-xs text-slate-500 mt-1">الجزائر العاصمة وضواحيها</p>
-        </div>
-    </footer>
-
-    <!-- Admin Authentication Modal -->
-    <div id="adminAuthModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative border border-slate-200">
-            <button onclick="closeAdminAuthModal()" class="absolute top-4 left-4 text-slate-400 hover:text-slate-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <div class="text-center mb-6">
-                <div class="w-14 h-14 bg-brand-dark text-brand-yellow rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl shadow-md">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
-                <h3 class="text-xl font-bold text-brand-dark">دخول المشرفين</h3>
-                <p class="text-xs text-slate-500 mt-1">يرجى إدخال كلمة المرور (1593) لرؤية الإحصائيات وإدارة القائمة</p>
-            </div>
-            <form onsubmit="verifyAdminPass(event)">
-                <div class="mb-4">
-                    <input type="password" id="adminPasswordInput" placeholder="أدخل كلمة المرور" 
-                        class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-dark outline-none text-center font-bold tracking-widest text-lg">
-                    <p id="adminAuthError" class="text-xs text-red-500 mt-2 hidden text-center">كلمة المرور غير صحيحة، حاول مجدداً</p>
-                </div>
-                <button type="submit" class="w-full bg-brand-dark hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition shadow-md">
-                    دخول إلى لوحة التحكم
-                </button>
-            </form>
-        </div>
     </div>
 
-    <!-- Full Screen Admin Dashboard Modal -->
-    <div id="adminDashboardModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden overflow-y-auto p-2 sm:p-6">
-        <div class="max-w-7xl mx-auto bg-slate-50 rounded-3xl shadow-2xl overflow-hidden min-h-[90vh] flex flex-col border border-slate-200">
-            
-            <!-- Dashboard Header -->
-            <div class="bg-brand-dark text-white px-6 py-5 flex flex-wrap items-center justify-between gap-4 border-b border-slate-700">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-brand-orange text-white flex items-center justify-center text-lg font-bold">
-                        <i class="fa-solid fa-chart-pie"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold text-white">لوحة تحكم المشرف - خرجة آل حمدي</h2>
-                        <p class="text-xs text-slate-300">متابعة التسجيلات وإدارة وسائل النقل والمقاعد</p>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                        <i class="fa-solid fa-file-excel"></i> تصدير البيانات (CSV)
-                    </button>
-                    <button onclick="window.print()" class="bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-                        <i class="fa-solid fa-print"></i> طباعة
-                    </button>
-                    <button onclick="closeAdminDashboard()" class="bg-red-500/20 hover:bg-red-500 text-red-200 hover:text-white px-3 py-2 rounded-xl text-xs font-bold transition mr-2">
-                        إغلاق اللوحة <i class="fa-solid fa-xmark mr-1"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Dashboard Content Container -->
-            <div class="p-4 sm:p-8 flex-grow space-y-8">
-
-                <!-- 1. Key Statistics Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                    <!-- Stat 1: Total Registrations -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold text-slate-400 block mb-1">إجمالي العائلات</span>
-                            <span id="statTotalFamilies" class="text-2xl font-black text-brand-dark">0</span>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-brand-dark flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-house-chimney-user"></i>
-                        </div>
-                    </div>
-
-                    <!-- Stat 2: Total People & Gender -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold text-slate-400 block mb-1">مجموع الأفراد</span>
-                            <span id="statTotalPersons" class="text-2xl font-black text-brand-dark">0</span>
-                            <span class="text-[11px] text-slate-500 block mt-0.5">
-                                👨 <span id="statMale">0</span> | 👩 <span id="statFemale">0</span>
-                            </span>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-                    </div>
-
-                    <!-- Stat 3: Available Seats -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold text-slate-400 block mb-1">مقاعد متوفرة</span>
-                            <span id="statSeatsAvailable" class="text-2xl font-black text-brand-teal">0</span>
-                            <span class="text-[11px] text-slate-500 block mt-0.5">من أصحاب السيارات</span>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-teal-50 text-brand-teal flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-car-side"></i>
-                        </div>
-                    </div>
-
-                    <!-- Stat 4: Required Seats -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold text-slate-400 block mb-1">مقاعد مطلوبة</span>
-                            <span id="statSeatsNeeded" class="text-2xl font-black text-brand-orange">0</span>
-                            <span class="text-[11px] text-slate-500 block mt-0.5">يحتاجون إلى ركوب</span>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-brand-orange flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-chair"></i>
-                        </div>
-                    </div>
-
-                    <!-- Stat 5: Transport Balance -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
-                        <div>
-                            <span class="text-xs font-bold text-slate-400 block mb-1">ميزان وسائل النقل</span>
-                            <span id="statBalance" class="text-lg font-black text-slate-800">متوازن</span>
-                            <span id="statBalanceSub" class="text-[11px] block mt-0.5 text-slate-500">الفارق بين العرض والطلب</span>
-                        </div>
-                        <div id="statBalanceIcon" class="w-12 h-12 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-scale-balanced"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. Controls & Filter Bar -->
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div class="w-full md:w-1/3 relative">
-                        <i class="fa-solid fa-magnifying-glass absolute right-3 top-3.5 text-slate-400"></i>
-                        <input type="text" id="adminSearchInput" oninput="renderAdminTable()" placeholder="ابحث باسم الفرد أو المنطقة..." 
-                            class="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-brand-teal outline-none text-sm bg-slate-50">
-                    </div>
-
-                    <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
-                        <label class="text-xs font-bold text-slate-500">تصفية حسب النقل:</label>
-                        <select id="adminFilterTransport" onchange="renderAdminTable()" class="px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs font-bold text-slate-700 outline-none">
-                            <option value="all">الكل</option>
-                            <option value="need_ride">يحتاج إلى ركوب 🪑</option>
-                            <option value="have_seats">يوفر مقاعد 🚗</option>
-                            <option value="full_car">سيارته ممتلئة 🚘</option>
-                        </select>
-
-                        <button onclick="clearAllData()" class="bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold px-3 py-2 rounded-xl transition border border-red-200 mr-auto md:mr-0">
-                            <i class="fa-regular fa-trash-can"></i> مسح كافة البيانات
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 3. Interactive Registrations Table -->
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-right border-collapse">
-                            <thead>
-                                <tr class="bg-slate-100/80 text-slate-700 text-xs font-black border-b border-slate-200">
-                                    <th class="p-4">#</th>
-                                    <th class="p-4">الاسم الكامل</th>
-                                    <th class="p-4 text-center">عدد الأفراد (ذكر/أنثى)</th>
-                                    <th class="p-4">مكان الانطلاق</th>
-                                    <th class="p-4">رقم الهاتف</th>
-                                    <th class="p-4">حالة النقل والسيارة</th>
-                                    <th class="p-4">الملاحظات</th>
-                                    <th class="p-4 text-center no-print">إجراءات</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminTableBody" class="divide-y divide-slate-100 text-sm">
-                                <!-- Dynamic Rows Go Here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="emptyTableNotice" class="hidden p-8 text-center text-slate-400 text-sm">
-                        <i class="fa-solid fa-folder-open text-3xl mb-2 block"></i>
-                        لا توجد تسجيلات مطابقة للبحث أو الفلتر حالياً.
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Success Confirmation Modal -->
-    <div id="successModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-slate-100 relative">
-            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner bounce-subtle">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <h3 class="text-2xl font-black text-brand-dark mb-2">تم تسجيلكم بنجاح! 🎉</h3>
-            <p class="text-slate-600 text-sm mb-6 leading-relaxed">
-                شكراً لك <span id="confirmedUserName" class="font-bold text-brand-teal"></span> على تأكيد المشاركة. يسعدنا وجودكم وسنكون على تواصل معكم قبل موعد الخرجة العائلية!
-            </p>
-            <button onclick="closeSuccessModal()" class="w-full bg-brand-teal hover:bg-teal-700 text-white font-bold py-3 rounded-xl transition shadow-lg">
-                تم، شكراً لكم!
-            </button>
-        </div>
-    </div>
-
-    <!-- JavaScript Application Logic -->
     <script>
-        const STORAGE_KEY = 'hamdi_family_trip_registrations';
-        const ADMIN_PASSCODE = '1593';
+        // Target Date: Friday, Nov 13, 2026 10:00:00 AM
+        const targetDate = new Date("Nov 13, 2026 10:00:00").getTime();
 
-        // Sample initial data if storage is empty
-        const sampleData = [
-            {
-                id: 1,
-                fullName: 'حمزة آل حمدي',
-                maleCount: 2,
-                femaleCount: 3,
-                location: 'الحميز',
-                phone: '0661234567',
-                transportStatus: 'have_seats',
-                seatsAvailable: 3,
-                seatsNeeded: 0,
-                notes: 'سأحضر معي بعض الحلويات والمشروبات 🍰',
-                timestamp: new Date().toISOString()
-            },
-            {
-                id: 2,
-                fullName: 'كمال آل حمدي',
-                maleCount: 1,
-                femaleCount: 2,
-                location: 'القبة',
-                phone: '0555987654',
-                transportStatus: 'need_ride',
-                seatsAvailable: 0,
-                seatsNeeded: 3,
-                notes: 'نحتاج لمقاعد قريبة من منطقة القبة لطفا',
-                timestamp: new Date().toISOString()
-            },
-            {
-                id: 3,
-                fullName: 'يوسف آل حمدي',
-                maleCount: 2,
-                femaleCount: 2,
-                location: 'برج الكيفان',
-                phone: '0770112233',
-                transportStatus: 'full_car',
-                seatsAvailable: 0,
-                seatsNeeded: 0,
-                notes: 'جاهزون ومستعدون للمسابقات!',
-                timestamp: new Date().toISOString()
-            }
-        ];
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-        function getRegistrations() {
-            const data = localStorage.getItem(STORAGE_KEY);
-            if (!data) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(sampleData));
-                return sampleData;
-            }
-            return JSON.parse(data);
-        }
-
-        function saveRegistrations(data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            updateQuickStats();
-        }
-
-        function calculateTotal() {
-            const males = parseInt(document.getElementById('maleCount').value) || 0;
-            const females = parseInt(document.getElementById('femaleCount').value) || 0;
-            const total = males + females;
-            document.getElementById('totalMembers').innerText = `${total} فرد`;
-        }
-
-        function handleTransportChange(value) {
-            const needContainer = document.getElementById('seatsNeededContainer');
-            const availContainer = document.getElementById('seatsAvailableContainer');
-
-            if (value === 'need_ride') {
-                needContainer.classList.remove('hidden');
-                availContainer.classList.add('hidden');
-            } else if (value === 'have_seats') {
-                availContainer.classList.remove('hidden');
-                needContainer.classList.add('hidden');
-            } else {
-                needContainer.classList.add('hidden');
-                availContainer.classList.add('hidden');
-            }
-        }
-
-        function handleFormSubmit(event) {
-            event.preventDefault();
-
-            const fullName = document.getElementById('fullName').value.trim();
-            const maleCount = parseInt(document.getElementById('maleCount').value) || 0;
-            const femaleCount = parseInt(document.getElementById('femaleCount').value) || 0;
-            const location = document.getElementById('location').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const notes = document.getElementById('notes').value.trim();
-
-            const transportRadios = document.getElementsByName('transportStatus');
-            let transportStatus = 'full_car';
-            for (const radio of transportRadios) {
-                if (radio.checked) {
-                    transportStatus = radio.value;
-                    break;
-                }
-            }
-
-            let seatsNeeded = 0;
-            let seatsAvailable = 0;
-
-            if (transportStatus === 'need_ride') {
-                seatsNeeded = parseInt(document.getElementById('seatsNeeded').value) || 1;
-            } else if (transportStatus === 'have_seats') {
-                seatsAvailable = parseInt(document.getElementById('seatsAvailable').value) || 1;
-            }
-
-            const newRegistration = {
-                id: Date.now(),
-                fullName,
-                maleCount,
-                femaleCount,
-                location,
-                phone,
-                transportStatus,
-                seatsNeeded,
-                seatsAvailable,
-                notes,
-                timestamp: new Date().toISOString()
-            };
-
-            const currentData = getRegistrations();
-            currentData.push(newRegistration);
-            saveRegistrations(currentData);
-
-            if (typeof confetti === 'function') {
-                confetti({
-                    particleCount: 120,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
-            }
-
-            document.getElementById('confirmedUserName').innerText = fullName;
-            document.getElementById('successModal').classList.remove('hidden');
-
-            document.getElementById('registrationForm').reset();
-            calculateTotal();
-            handleTransportChange('');
-        }
-
-        function closeSuccessModal() {
-            document.getElementById('successModal').classList.add('hidden');
-        }
-
-        function startCountdown() {
-            const targetDate = new Date();
-            targetDate.setDate(targetDate.getDate() + 10);
-            targetDate.setHours(9, 0, 0, 0);
-
-            function updateTimer() {
-                const now = new Date().getTime();
-                const distance = targetDate.getTime() - now;
-
-                if (distance < 0) {
-                    document.getElementById('countdown').innerHTML = "<div class='col-span-4 text-brand-yellow font-bold'>الخرجة انطلقت المباركة! 🌴</div>";
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                document.getElementById('days').innerText = String(days).padStart(2, '0');
-                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-            }
-
-            updateTimer();
-            setInterval(updateTimer, 1000);
-        }
-
-        function updateQuickStats() {
-            const data = getRegistrations();
-            document.getElementById('quickTotalRegistrations').innerText = data.length;
-            const available = data.reduce((acc, curr) => acc + (curr.seatsAvailable || 0), 0);
-            document.getElementById('quickAvailableSeats').innerText = available;
-        }
-
-        function openAdminModal() {
-            document.getElementById('adminAuthModal').classList.remove('hidden');
-            document.getElementById('adminPasswordInput').focus();
-        }
-
-        function closeAdminAuthModal() {
-            document.getElementById('adminAuthModal').classList.add('hidden');
-            document.getElementById('adminAuthError').classList.add('hidden');
-        }
-
-        function verifyAdminPass(event) {
-            event.preventDefault();
-            const pass = document.getElementById('adminPasswordInput').value;
-            if (pass === ADMIN_PASSCODE) {
-                closeAdminAuthModal();
-                openAdminDashboard();
-                document.getElementById('adminPasswordInput').value = '';
-            } else {
-                document.getElementById('adminAuthError').classList.remove('hidden');
-            }
-        }
-
-        function openAdminDashboard() {
-            document.getElementById('adminDashboardModal').classList.remove('hidden');
-            renderAdminDashboard();
-        }
-
-        function closeAdminDashboard() {
-            document.getElementById('adminDashboardModal').classList.add('hidden');
-        }
-
-        function renderAdminDashboard() {
-            const data = getRegistrations();
-
-            const totalFamilies = data.length;
-            let totalMales = 0;
-            let totalFemales = 0;
-            let seatsAvail = 0;
-            let seatsNeed = 0;
-
-            data.forEach(item => {
-                totalMales += (item.maleCount || 0);
-                totalFemales += (item.femaleCount || 0);
-                seatsAvail += (item.seatsAvailable || 0);
-                seatsNeed += (item.seatsNeeded || 0);
-            });
-
-            const totalPersons = totalMales + totalFemales;
-            const balance = seatsAvail - seatsNeed;
-
-            document.getElementById('statTotalFamilies').innerText = totalFamilies;
-            document.getElementById('statTotalPersons').innerText = totalPersons;
-            document.getElementById('statMale').innerText = totalMales;
-            document.getElementById('statFemale').innerText = totalFemales;
-            document.getElementById('statSeatsAvailable').innerText = seatsAvail;
-            document.getElementById('statSeatsNeeded').innerText = seatsNeed;
-
-            const balanceEl = document.getElementById('statBalance');
-            const balanceSubEl = document.getElementById('statBalanceSub');
-            const balanceIconEl = document.getElementById('statBalanceIcon');
-
-            if (balance > 0) {
-                balanceEl.innerText = `فائض +${balance}`;
-                balanceEl.className = 'text-lg font-black text-emerald-600';
-                balanceSubEl.innerText = 'يوجد مقاعد زائدة تكفي الجميع 🚗';
-                balanceIconEl.className = 'w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl';
-            } else if (balance < 0) {
-                balanceEl.innerText = `عجز ${balance}`;
-                balanceEl.className = 'text-lg font-black text-red-600';
-                balanceSubEl.innerText = `نحتاج ${Math.abs(balance)} مقاعد إضافية ⚠️`;
-                balanceIconEl.className = 'w-12 h-12 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-xl';
-            } else {
-                balanceEl.innerText = 'متوازن تماماً';
-                balanceEl.className = 'text-lg font-black text-blue-600';
-                balanceSubEl.innerText = 'المقاعد المتاحة تغطي المطلوب تماماً';
-                balanceIconEl.className = 'w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl';
-            }
-
-            renderAdminTable();
-        }
-
-        function renderAdminTable() {
-            const data = getRegistrations();
-            const searchVal = (document.getElementById('adminSearchInput')?.value || '').toLowerCase();
-            const filterTransport = document.getElementById('adminFilterTransport')?.value || 'all';
-
-            const filtered = data.filter(item => {
-                const matchesSearch = item.fullName.toLowerCase().includes(searchVal) || 
-                                      item.location.toLowerCase().includes(searchVal) ||
-                                      item.phone.includes(searchVal);
-                
-                const matchesTransport = (filterTransport === 'all') || (item.transportStatus === filterTransport);
-
-                return matchesSearch && matchesTransport;
-            });
-
-            const tbody = document.getElementById('adminTableBody');
-            const emptyNotice = document.getElementById('emptyTableNotice');
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = '';
-                emptyNotice.classList.remove('hidden');
+            if (distance < 0) {
+                document.getElementById("countdownBox").innerHTML = "<div class='col-span-4 text-center text-emerald-400 font-bold text-lg py-2'>🎉 حان موعد الخرجة العائلية المباركة!</div>";
                 return;
             }
 
-            emptyNotice.classList.add('hidden');
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            tbody.innerHTML = filtered.map((item, index) => {
-                let transportBadge = '';
-                if (item.transportStatus === 'need_ride') {
-                    transportBadge = `<span class="bg-orange-100 text-brand-orange px-2.5 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1">
-                                        <i class="fa-solid fa-person-walking-luggage"></i> يحتاج (${item.seatsNeeded} مقاعد)
-                                      </span>`;
-                } else if (item.transportStatus === 'have_seats') {
-                    transportBadge = `<span class="bg-teal-100 text-brand-teal px-2.5 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1">
-                                        <i class="fa-solid fa-car-side"></i> يوفر (${item.seatsAvailable} مقاعد)
-                                      </span>`;
-                } else {
-                    transportBadge = `<span class="bg-blue-100 text-brand-blue px-2.5 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1">
-                                        <i class="fa-solid fa-circle-check"></i> سيارته ممتلئة
-                                      </span>`;
-                }
-
-                const totalInFam = (item.maleCount || 0) + (item.femaleCount || 0);
-
-                return `
-                    <tr class="hover:bg-slate-50/80 transition">
-                        <td class="p-4 font-bold text-slate-400 text-xs">${index + 1}</td>
-                        <td class="p-4 font-bold text-slate-800">${escapeHtml(item.fullName)}</td>
-                        <td class="p-4 text-center">
-                            <span class="font-extrabold text-slate-700">${totalInFam}</span> 
-                            <span class="text-xs text-slate-400">(${item.maleCount || 0} ذ / ${item.femaleCount || 0} إ)</span>
-                        </td>
-                        <td class="p-4"><span class="bg-slate-100 px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700">📍 ${escapeHtml(item.location)}</span></td>
-                        <td class="p-4 text-left font-mono text-xs font-bold dir-ltr">${escapeHtml(item.phone)}</td>
-                        <td class="p-4">${transportBadge}</td>
-                        <td class="p-4 text-xs text-slate-500 max-w-xs truncate" title="${escapeHtml(item.notes || '-')}">${escapeHtml(item.notes || '-')}</td>
-                        <td class="p-4 text-center no-print">
-                            <button onclick="deleteRegistration(${item.id})" class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 w-8 h-8 rounded-lg flex items-center justify-center transition mx-auto" title="حذف">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
         }
 
-        function deleteRegistration(id) {
-            if (confirm('هل أنت تأكد من رغبتك في حذف هذا التسجيل؟')) {
-                let data = getRegistrations();
-                data = data.filter(item => item.id !== id);
-                saveRegistrations(data);
-                renderAdminDashboard();
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Data Store using LocalStorage
+        let registrations = JSON.parse(localStorage.getItem('hamdi_registrations') || '[]');
+        let isAdminLoggedIn = false;
+
+        function calculateTotal() {
+            const m = parseInt(document.getElementById('males').value) || 0;
+            const f = parseInt(document.getElementById('females').value) || 0;
+            document.getElementById('totalCount').innerText = m + f;
+        }
+
+        function toggleTransportFields() {
+            const transportType = document.querySelector('input[name="transport"]:checked')?.value;
+            const needContainer = document.getElementById('needSeatContainer');
+            const haveContainer = document.getElementById('haveSeatContainer');
+
+            if (transportType === 'need') {
+                needContainer.classList.remove('hidden');
+                haveContainer.classList.add('hidden');
+            } else if (transportType === 'have') {
+                haveContainer.classList.remove('hidden');
+                needContainer.classList.add('hidden');
             }
         }
 
-        function clearAllData() {
-            if (confirm('تنبيه هام! هل أنت متاكد من مسح جميع البيانات والتسجيلات بشكل نهائي؟')) {
-                localStorage.removeItem(STORAGE_KEY);
-                renderAdminDashboard();
-                updateQuickStats();
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const males = parseInt(document.getElementById('males').value) || 0;
+            const females = parseInt(document.getElementById('females').value) || 0;
+            const transport = document.querySelector('input[name="transport"]:checked')?.value;
+
+            const newEntry = {
+                id: Date.now(),
+                fullName: document.getElementById('fullName').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                location: document.getElementById('location').value.trim(),
+                males: males,
+                females: females,
+                total: males + females,
+                transport: transport,
+                neededSeats: transport === 'need' ? (parseInt(document.getElementById('neededSeats').value) || 0) : 0,
+                availableSeats: transport === 'have' ? (parseInt(document.getElementById('availableSeats').value) || 0) : 0,
+                notes: document.getElementById('notes').value.trim(),
+                date: new Date().toLocaleString('ar-DZ')
+            };
+
+            registrations.push(newEntry);
+            localStorage.setItem('hamdi_registrations', JSON.stringify(registrations));
+
+            confetti({
+                particleCount: 120,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            alert('✅ تم تسجيل بياناتك بنجاح! شكرًا لمشاركتك معنا في الخرجة العائلية.');
+            document.getElementById('tripForm').reset();
+            calculateTotal();
+            toggleTransportFields();
+        }
+
+        function switchTab(tab) {
+            const formSec = document.getElementById('formSection');
+            const authSec = document.getElementById('adminAuthSection');
+            const dashSec = document.getElementById('adminDashboard');
+            const tabFormBtn = document.getElementById('tabFormBtn');
+            const tabAdminBtn = document.getElementById('tabAdminBtn');
+
+            if (tab === 'form') {
+                formSec.classList.remove('hidden');
+                authSec.classList.add('hidden');
+                dashSec.classList.add('hidden');
+
+                tabFormBtn.className = "px-6 py-3 rounded-2xl font-bold transition-all shadow-md bg-brand-orange text-white flex items-center gap-2";
+                tabAdminBtn.className = "px-6 py-3 rounded-2xl font-bold transition-all shadow-md bg-white/80 text-slate-700 hover:bg-white flex items-center gap-2";
+            } else {
+                formSec.classList.add('hidden');
+                if (isAdminLoggedIn) {
+                    dashSec.classList.remove('hidden');
+                    renderAdminTable();
+                } else {
+                    authSec.classList.remove('hidden');
+                }
+
+                tabAdminBtn.className = "px-6 py-3 rounded-2xl font-bold transition-all shadow-md bg-brand-orange text-white flex items-center gap-2";
+                tabFormBtn.className = "px-6 py-3 rounded-2xl font-bold transition-all shadow-md bg-white/80 text-slate-700 hover:bg-white flex items-center gap-2";
+            }
+        }
+
+        function checkAdminPassword() {
+            const pwd = document.getElementById('adminPassword').value;
+            if (pwd === '1593') {
+                isAdminLoggedIn = true;
+                document.getElementById('adminAuthSection').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                renderAdminTable();
+            } else {
+                alert('❌ الرقم السري غير صحيح!');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            document.getElementById('adminPassword').value = '';
+            switchTab('form');
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('responsesTable');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            tbody.innerHTML = '';
+
+            let statFamilies = 0;
+            let statTotal = 0;
+            let statMales = 0;
+            let statFemales = 0;
+            let statNeeded = 0;
+            let statAvail = 0;
+
+            const filtered = registrations.filter(r => 
+                r.fullName.toLowerCase().includes(search) || 
+                r.location.toLowerCase().includes(search)
+            );
+
+            registrations.forEach(r => {
+                statFamilies++;
+                statTotal += r.total;
+                statMales += r.males;
+                statFemales += r.females;
+                statNeeded += r.neededSeats;
+                statAvail += r.availableSeats;
+            });
+
+            document.getElementById('statFamilies').innerText = statFamilies;
+            document.getElementById('statTotalPeople').innerText = statTotal;
+            document.getElementById('statMales').innerText = statMales;
+            document.getElementById('statFemales').innerText = statFemales;
+            document.getElementById('statNeededSeats').innerText = statNeeded;
+            document.getElementById('statAvailableSeats').innerText = statAvail;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-slate-400">لا توجد تسجيلات حتى الآن</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition";
+                
+                let transportBadge = item.transport === 'need' 
+                    ? `<span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-lg font-bold">يحتاج ${item.neededSeats} مقاعد</span>`
+                    : `<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-lg font-bold">لديه ${item.availableSeats} مقاعد شاغرة</span>`;
+
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-slate-900">${item.fullName}</td>
+                    <td class="p-3 dir-ltr text-right">${item.phone}</td>
+                    <td class="p-3">${item.location}</td>
+                    <td class="p-3 text-center font-bold">${item.total} (${item.males} ذ / ${item.females} إ)</td>
+                    <td class="p-3">${transportBadge}</td>
+                    <td class="p-3 text-slate-500 max-w-xs truncate">${item.notes || '-'}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="deleteEntry(${item.id})" class="text-red-500 hover:text-red-700 font-bold px-2 py-1">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function deleteEntry(id) {
+            if (confirm('هل أنت تأكد من حذف هذا التسجيل؟')) {
+                registrations = registrations.filter(r => r.id !== id);
+                localStorage.setItem('hamdi_registrations', JSON.stringify(registrations));
+                renderAdminTable();
             }
         }
 
         function exportToCSV() {
-            const data = getRegistrations();
-            if (data.length === 0) {
-                alert('لا توجد بيانات لتصديرها');
+            if (registrations.length === 0) {
+                alert('لا توجد بيانات لتصديرها!');
                 return;
             }
 
-            let csvContent = "\uFEFFالاسم الكامل,إجمالي الأفراد,الذكور,الإناث,مكان الانطلاق,رقم الهاتف,حالة النقل,المقاعد الشاغرة المتاحة,المقاعد المطلوبة,ملاحظات\n";
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+            csvContent += "الاسم الكامل,رقم الهاتف,مكان الانطلاق,مجموع الأفراد,الذكور,الإناث,وسيلة النقل,المقاعد المطلوبة,المقاعد الشاغرة,الملاحظات,تاريخ التسجيل\n";
 
-            data.forEach(item => {
-                const total = (item.maleCount || 0) + (item.femaleCount || 0);
-                let statusText = '';
-                if (item.transportStatus === 'need_ride') statusText = 'يحتاج إلى ركوب';
-                else if (item.transportStatus === 'have_seats') statusText = 'يوفر مقاعد';
-                else statusText = 'سيارته ممتلئة';
-
-                const row = [
-                    `"${item.fullName}"`,
-                    total,
-                    item.maleCount || 0,
-                    item.femaleCount || 0,
-                    `"${item.location}"`,
-                    `"${item.phone}"`,
-                    `"${statusText}"`,
-                    item.seatsAvailable || 0,
-                    item.seatsNeeded || 0,
-                    `"${(item.notes || '').replace(/"/g, '""')}"`
-                ];
-                csvContent += row.join(",") + "\n";
+            registrations.forEach(r => {
+                const transportText = r.transport === 'need' ? 'يحتاج ركوب' : 'لديه سيارة';
+                csvContent += `"${r.fullName}","${r.phone}","${r.location}",${r.total},${r.males},${r.females},"${transportText}",${r.neededSeats},${r.availableSeats},"${r.notes || ''}","${r.date}"\n`;
             });
 
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
+            const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
-            link.setAttribute("href", url);
-            link.setAttribute("download", `خرجة_عائلة_آل_حمدي_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "تسجيلات_الخرجة_العائلية_آل_حمدي.csv");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            return text
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        window.onload = function() {
-            startCountdown();
-            updateQuickStats();
-        };
     </script>
 </body>
 </html>
